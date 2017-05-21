@@ -30,6 +30,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Protractor">
       <HintPath>..\AngularApp\lib\Protractor.dll</HintPath>
     </Reference>
@@ -58,11 +62,19 @@
     <Compile Include="Base\Browser.cs" />
     <Compile Include="Base\DriverContext.cs" />
     <Compile Include="Base\TestInitializeHook.cs" />
+    <Compile Include="Base\WebElementExtensions.cs" />
     <Compile Include="Class1.cs" />
+    <Compile Include="Logger\LogHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="LoggerConfig.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Config\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

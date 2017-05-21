@@ -1,16 +1,18 @@
-﻿using OpenQA.Selenium;
-using OpenQA.Selenium.Support.PageObjects;
-using Protractor;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Protractor;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Support.PageObjects;
 using Utils.Base;
+using NUnit.Framework;
 
 namespace AngularApp
 {
-    class CreateEmployeePage : BasePage
+    class EditEmployeePage : BasePage
     {
         [FindsBy(How = How.Custom, CustomFinderType = typeof(NgByModel), Using = "selectedEmployee.firstName")]
         public IWebElement firstName;
@@ -24,20 +26,17 @@ namespace AngularApp
         [FindsBy(How = How.Custom, CustomFinderType = typeof(NgByModel), Using = "selectedEmployee.email")]
         public IWebElement email;
 
-        [FindsBy(How = How.XPath, Using = "//button[contains(text(), 'Add')]")]//ng-show="isCreateForm"
-        IWebElement btnAdd { get; set; }
+        [FindsBy(How = How.XPath, Using = "//button[contains(text(), 'Update')]")]//ng-show="isCreateForm"
+        IWebElement btnUpdate { get; set; }
 
-        [FindsBy(How = How.LinkText, Using = "Cancel")]
+        [FindsBy(How = How.LinkText, Using = "Back")]
         IWebElement btnCancel { get; set; }
 
-        public void AddEmployee()
+        public void Append_String_To_Name()
         {
-            firstName.SendKeys("Procfirst1");
-            lastName.SendKeys("Proclast1");
-            startDate.SendKeys("2017-01-01");
-            email.SendKeys("Procfirst1@Procfirst1.com");
-            btnAdd.Click();
+            string firstNameValue = firstName.Text + "appendedValue";
+            firstName.SetText(firstNameValue);
+            btnUpdate.CustomClick();
         }
-
     }
 }

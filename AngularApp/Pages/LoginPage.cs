@@ -31,10 +31,9 @@ namespace AngularApp
         public EmployeePage Login()
         {
             
-
-            txtLogon.SendKeys("Luke");
-            txtPassword.SendKeys("Skywalker");
-            btnLogin.Click();
+            txtLogon.SetText("Luke");
+            txtPassword.SetText("Skywalker");
+            btnLogin.CustomClick();
             return GetInstance<EmployeePage>();
         }
 

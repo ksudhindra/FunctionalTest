@@ -30,7 +30,7 @@ namespace AngularApp
 
         public CreateEmployeePage CheckHighlightListItem()
         {
-            btnCreate.Click();
+            btnCreate.CustomClick();
             return GetInstance<CreateEmployeePage>();
             /*if ((btnEdit != null) && (btnDelet != null)) {
                 btnEdit.Click();
@@ -38,6 +38,12 @@ namespace AngularApp
             //Assert.IsTrue(btnDelet.Enabled);
             }*/
 
+        }
+
+        public EditEmployeePage EditEmployee()
+        {
+            btnEdit.CustomClick();
+            return GetInstance<EditEmployeePage>();
         }
 
 
