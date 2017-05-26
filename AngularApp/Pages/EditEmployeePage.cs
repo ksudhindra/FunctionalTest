@@ -9,6 +9,7 @@ using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.PageObjects;
 using Utils.Base;
 using NUnit.Framework;
+using OpenQA.Selenium.Support.UI;
 
 namespace AngularApp
 {
@@ -32,11 +33,20 @@ namespace AngularApp
         [FindsBy(How = How.LinkText, Using = "Back")]
         IWebElement btnCancel { get; set; }
 
-        public void Append_String_To_Name()
+        public EditEmployeePage()
         {
-            string firstNameValue = firstName.Text + "appendedValue";
+            var wait = new WebDriverWait(DriverContext.Driver, TimeSpan.FromSeconds(10));
+            ///html/body/div/div/div/form/fieldset/label[1]/span
+            IWebElement searchResult = wait.Until(x => x.FindElement(By.XPath("//span[contains(text(),'First name')]")));
+        }
+
+        public EmployeePage Append_String_To_Name()
+        {
+            
+            string firstNameValue = firstName.Text + Guid.NewGuid().ToString();
             firstName.SetText(firstNameValue);
             btnUpdate.CustomClick();
+            return GetInstance<EmployeePage>();
         }
     }
 }

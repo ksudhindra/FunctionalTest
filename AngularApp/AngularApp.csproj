@@ -64,6 +64,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Pages\CreateEmployeePage.cs" />
+    <Compile Include="Pages\DeleteEmployeePage.cs" />
     <Compile Include="Pages\EditEmployeePage.cs" />
     <Compile Include="Pages\EmployeePage.cs" />
     <Compile Include="Login.cs" />

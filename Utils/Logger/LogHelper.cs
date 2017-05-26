@@ -16,26 +16,6 @@ namespace Utils.Logger
             log4net.Config.XmlConfigurator.Configure(new System.IO.FileInfo(@"C:\Personal\MoveOut\QA Role\Assessment_LEAP\Code\FunctionalTest\FunctionalTest\Utils\LoggerConfig.xml"));
         }
         
-        
-        /*public static LogHelper Instance
-        {
-            get
-            {
-                if (instance == null)
-                {
-                    lock (padlock)
-                    {
-                        if (FrameworkLogger == null)
-                        {
-                            log4net.Config.XmlConfigurator.Configure(new System.IO.FileInfo(@"C:\Personal\MoveOut\QA Role\Assessment_LEAP\Code\FunctionalTest\FunctionalTest\Utils\LoggerConfig.xml"));
-                            instance = new LogHelper();
-                        }
-                    }
-
-                }
-                return instance;
-
-            }*/
         }
     }
 

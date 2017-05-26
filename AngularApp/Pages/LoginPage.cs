@@ -8,6 +8,7 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.PageObjects;
 using Utils.Base;
+using OpenQA.Selenium.Support.UI;
 
 namespace AngularApp
 {
@@ -23,14 +24,15 @@ namespace AngularApp
         [FindsBy(How = How.Custom, CustomFinderType = typeof(NgByModel), Using = "user.password")]
         IWebElement txtPassword { get; set; }
 
-        /*public LoginPage(IWebDriver driver)
-        {
-            PageFactory.InitElements(driver, this);
-        }*/
 
+        public LoginPage()
+        {
+            var wait = new WebDriverWait(DriverContext.Driver, TimeSpan.FromSeconds(10));
+            IWebElement searchResult = wait.Until(x => x.FindElement(By.XPath("//span[contains(text(),'Username')]")));
+
+        }
         public EmployeePage Login()
         {
-            
             txtLogon.SetText("Luke");
             txtPassword.SetText("Skywalker");
             btnLogin.CustomClick();

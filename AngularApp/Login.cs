@@ -10,64 +10,85 @@ using OpenQA.Selenium.Chrome;
 using Utils.Base;
 using Utils;
 using Utils.Logger;
+using OpenQA.Selenium.Support.UI;
+using System.Text.RegularExpressions;
 
 namespace AngularApp
 {
     [TestFixture]
     public class Login : Base
     {
-        //private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         private string baseURL = "http://cafetownsend-angular-rails.herokuapp.com";
         private NgWebDriver _ngdriver;
 
         [SetUp]
         public void Setup()
         {
-            //log4net.Config.XmlConfigurator.Configure(new System.IO.FileInfo(@"C:\Personal\MoveOut\QA Role\Assessment_LEAP\Code\FunctionalTest\FunctionalTest\AngularApp\bin\Debug\LoggerConfig.xml"));
             LogHelper.Intialize();
             LogHelper.FrameworkLogger.Info("Logger Initialized");
             DriverContext.Driver = new ChromeDriver();
             DriverContext.Browser = new Browser(DriverContext.Driver);
-            DriverContext.Driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
             LogHelper.FrameworkLogger.Info("Testing the frameworklogger");
             LogHelper.FrameworkLogger.Info("Setting the Implicit wait time to 10 seconds");
-            DriverContext.Driver.Manage().Timeouts().SetScriptTimeout(TimeSpan.FromSeconds(10));
+            DriverContext.Driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(10);
             LogHelper.FrameworkLogger.Info("Setting the Scripttimeout to 10 seconds");
             _ngdriver = new NgWebDriver(DriverContext.Driver);
             _ngdriver.Navigate().GoToUrl(baseURL);
-            LogHelper.FrameworkLogger.Info("Navigating to " + baseURL);
+            
+
+            //LogHelper.FrameworkLogger.Info("Navigating to " + baseURL);
         }
         [TearDown]
         public void TearDown()
         {
-
+            LogHelper.FrameworkLogger.Info("Closing the Broswer sesion");
+            GetInstance<EmployeePage>().Logout();
+            //DriverContext.Driver.Close();
         }
 
         [Test]
         public void EnterWebSite()
         {
-            /*var loginField = _ngdriver.FindElement(NgBy.Model("user.name"));
-            loginField.SendKeys("Luke");
-            var passworkField = _ngdriver.FindElement(NgBy.Model("user.password"));
-            passworkField.SendKeys("Skywalker");
-            var loginButon = _ngdriver.FindElement(NgBy.ButtonText("Login"));
-            loginButon.Click();*/
             BasePage CurrentPage =  GetInstance<LoginPage>();
-            //LoginPage lPage = new LoginPage();
-            //lPage.Login();
+
             CurrentPage = CurrentPage.As<LoginPage>().Login();
             List<IWebElement> checkEmployees = CurrentPage.As<EmployeePage>().lstEmployees.ToList();
-            foreach(IWebElement employee in checkEmployees)
+            LogHelper.FrameworkLogger.Info(string.Format("Found {0} employees", checkEmployees.Count));
+            /*foreach(IWebElement employee in checkEmployees)
             {
                 Assert.IsNotNull(employee.Text);
-                //Console.WriteLine(employee.Text);
-            }
-            checkEmployees.FirstOrDefault().Click();
-            CurrentPage = CurrentPage.As<EmployeePage>().EditEmployee();
-            //CurrentPage =  CurrentPage.As<EmployeePage>().CheckHighlightListItem();
-            //CurrentPage.As<CreateEmployeePage>().AddEmployee();
-            //CurrentPage = CurrentPage.As<CreateEmployeePage>().NavigateBack();
-            CurrentPage.As<EditEmployeePage>().Append_String_To_Name();
+                Console.WriteLine(employee.Text);
+            }*/
+            /*for(int i = 1; i < 100; i++)
+            {
+                checkEmployees = CurrentPage.As<EmployeePage>().lstEmployees.ToList();
+                LogHelper.FrameworkLogger.Info(string.Format("Found {0} employees", checkEmployees.Count));
+                Random rand = new Random();
+                checkEmployees[rand.Next(1, checkEmployees.Count)].Click();
+                CurrentPage = CurrentPage.As<EmployeePage>().EditEmployee();
+                //CurrentPage =  CurrentPage.As<EmployeePage>().CheckHighlightListItem();
+                //CurrentPage.As<CreateEmployeePage>().AddEmployee();
+                //CurrentPage = CurrentPage.As<CreateEmployeePage>().NavigateBack();
+                CurrentPage = CurrentPage.As<EditEmployeePage>().Append_String_To_Name();
+
+            }*/
+
+                foreach(IWebElement elem in checkEmployees)
+                {
+                    //Match result = Regex.Match(elem.Text, @"(\{){0,1}[0-9a-fA-F]{8}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{12}(\}){0,1}");
+                    //if(result.Success)
+                    {
+                        LogHelper.FrameworkLogger.Info(string.Format("deletig the {0} entry", elem.Text));
+                        CurrentPage.As<EmployeePage>().SelectEmployee(elem.Text).CustomClick();
+                        //elem.CustomClick();
+                        CurrentPage.As<EmployeePage>().DeleteEmlpoyee();
+                        
+                    }
+                break;
+
+                }
+            
+
 
         }
 
